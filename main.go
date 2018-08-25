@@ -1,7 +1,9 @@
 package main
 
 func main() {
-	cards := NewDeck()
+	myDeck := deck{}
 
-	cards.Print()
+	myDeck = ReadFromFile("myDeck")
+
+	myDeck.Print()
 }
