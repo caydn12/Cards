@@ -1,9 +1,11 @@
 package main
 
 func main() {
-	myDeck := deck{}
+	myDeck := NewDeck()
 
-	myDeck = ReadFromFile("myDeck")
+	for i := 0; i < 100; i++ {
+		myDeck.Shuffle()
+	}
 
 	myDeck.Print()
 }

@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 type deck []string
@@ -31,12 +33,22 @@ func (d deck) Print() {
 	}
 }
 
+func (d deck) Shuffle() {
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+
+	for i := range d {
+		newPosition := r.Intn(len(d))
+
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
+}
+
 //Deal : Returns a hand of cards, returns a new version of the deck without the dealt cards in it
 func Deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
 
-//SaveToFile : Saves all cards in the deck to a file passed in by the user. Each card is seperated by a comma
 func (d deck) SaveToFile(fileName string) error {
 	return ioutil.WriteFile(fileName, []byte(d.toString()), 0666)
 }
